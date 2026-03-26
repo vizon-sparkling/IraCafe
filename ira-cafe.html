@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRA Café – Irani Chai & Delicious Bites</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --orange: #e8640a;
+    --orange-light: #f07b2a;
+    --gold: #c9922a;
+    --gold-light: #e8b84b;
+    --cream: #f5e6cc;
+    --cream-dim: #c4ab88;
+    --white: #ffffff;
+    --muted: #5a5045;
+    --card-bg: #151210;
+    --card-border: #2a1f12;
+    --glow: rgba(232,100,10,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 70px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-emblem {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #1a1208 0%, #0a0a0a 100%);
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-text span:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    color: var(--orange);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .logo-text span:last-child {
+    font-size: 9px;
+    color: var(--cream-dim);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--cream-dim);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--orange); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .btn-order {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 0 20px rgba(232,100,10,0.3);
+  }
+
+  .btn-order:hover {
+    background: var(--orange-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 30px rgba(232,100,10,0.5);
+  }
+
+  /* Hamburger */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: 0.3s; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 70px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,146,42,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 20% 80%, rgba(232,100,10,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse 30% 40% at 80% 20%, rgba(232,100,10,0.05) 0%, transparent 50%),
+      #0a0a0a;
+  }
+
+  /* Decorative floating shapes */
+  .hero-deco {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .hero-deco-1 { width: 500px; height: 500px; background: rgba(201,146,42,0.04); top: -100px; right: -100px; animation: floatDeco 8s ease-in-out infinite; }
+  .hero-deco-2 { width: 300px; height: 300px; background: rgba(232,100,10,0.06); bottom: 100px; left: -50px; animation: floatDeco 6s ease-in-out infinite reverse; }
+
+  @keyframes floatDeco {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    padding: 0 24px;
+    animation: heroIn 1.2s ease forwards;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  @keyframes heroIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+
+  .hero-eyebrow::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 9vw, 100px);
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .hero-title .accent { color: var(--orange); }
+
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(14px, 2vw, 20px);
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(14px, 1.8vw, 17px);
+    color: var(--cream-dim);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 48px;
+    line-height: 1.6;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(232,100,10,0.4);
+  }
+
+  .btn-primary:hover {
+    background: var(--orange-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(232,100,10,0.6);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--card-border);
+    padding: 16px 40px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,146,42,0.05);
+  }
+
+  /* Hero stats */
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 64px;
+    position: relative;
+  }
+
+  .hero-stats::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 20px;
+    background: var(--card-border);
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: var(--orange);
+    font-weight: 700;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Floating icons */
+  .float-icons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .float-icon {
+    position: absolute;
+    font-size: 32px;
+    opacity: 0.06;
+    animation: floatIcon var(--dur, 10s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes floatIcon {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(5deg); }
+    66% { transform: translateY(10px) rotate(-3deg); }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 100px 5%; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    color: var(--white);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .section-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    margin: 20px auto 0;
+  }
+
+  /* ─── MENU SECTION ─── */
+  #menu { background: var(--bg2); }
+
+  /* Category tabs */
+  .menu-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--cream-dim);
+    padding: 8px 20px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(232,100,10,0.3);
+  }
+
+  /* Menu grid */
+  .menu-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    animation: fadeGrid 0.4s ease;
+  }
+
+  .menu-grid.active { display: grid; }
+
+  @keyframes fadeGrid {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .menu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .menu-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,100,10,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .menu-card:hover {
+    border-color: var(--orange);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(232,100,10,0.15), 0 0 0 1px rgba(232,100,10,0.1);
+  }
+
+  .menu-card:hover::before { opacity: 1; }
+
+  .item-icon {
+    font-size: 28px;
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-radius: 4px;
+    border: 1px solid var(--card-border);
+    transition: transform 0.3s;
+  }
+
+  .menu-card:hover .item-icon { transform: scale(1.1) rotate(-5deg); }
+
+  .item-info { flex: 1; min-width: 0; }
+
+  .item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .item-desc {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--orange);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .item-price span {
+    font-size: 10px;
+    font-family: 'Raleway', sans-serif;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* ─── OFFERS SECTION ─── */
+  #offers { background: var(--bg); }
+
+  .offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .offer-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .offer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+  }
+
+  .offer-card:hover {
+    border-color: rgba(232,100,10,0.3);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .offer-badge {
+    display: inline-block;
+    background: rgba(232,100,10,0.15);
+    border: 1px solid rgba(232,100,10,0.3);
+    color: var(--orange);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .offer-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .offer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .offer-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .offer-validity {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .offer-validity::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* ─── CONTACT SECTION ─── */
+  #contact { background: var(--bg2); }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    color: var(--white);
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .contact-info h3 em {
+    color: var(--orange);
+    font-style: normal;
+  }
+
+  .contact-info p {
+    color: var(--cream-dim);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .contact-details { display: flex; flex-direction: column; gap: 20px; }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .contact-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+
+  .contact-row:hover .contact-icon {
+    border-color: var(--orange);
+    background: rgba(232,100,10,0.08);
+  }
+
+  .contact-row-text strong {
+    display: block;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .contact-row-text span {
+    font-size: 14px;
+    color: var(--cream);
+  }
+
+  .contact-cta { text-align: center; }
+
+  .contact-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at bottom, rgba(232,100,10,0.05), transparent 70%);
+  }
+
+  .contact-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .contact-box p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 32px;
+  }
+
+  .btn-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 16px 36px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+    text-decoration: none;
+    box-shadow: 0 0 30px rgba(232,100,10,0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-call:hover {
+    background: var(--orange-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(232,100,10,0.5);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #050505;
+    border-top: 1px solid var(--card-border);
+    padding: 40px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: var(--orange);
+    letter-spacing: 4px;
+  }
+
+  .footer-logo span {
+    display: block;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 5px;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 2px;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-copy a { color: var(--gold); text-decoration: none; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 70px;
+      left: 0; right: 0;
+      background: rgba(10,10,10,0.98);
+      backdrop-filter: blur(20px);
+      padding: 30px;
+      gap: 24px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .hero-stats { gap: 30px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    section { padding: 70px 5%; }
+    .menu-tabs { gap: 6px; }
+    .tab-btn { padding: 6px 14px; font-size: 10px; }
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="logo-emblem">IRA</div>
+    <div class="logo-text">
+      <span>IRA CAFÉ</span>
+      <span>Irani Chai</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#offers">Offers</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:16px;align-items:center;">
+    <a href="tel:7760954050" class="btn-order">Order Now</a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+  <div class="float-icons">
+    <div class="float-icon" style="top:15%;left:8%;--dur:12s;--delay:0s">☕</div>
+    <div class="float-icon" style="top:25%;right:10%;--dur:9s;--delay:2s">🍵</div>
+    <div class="float-icon" style="bottom:30%;left:15%;--dur:11s;--delay:1s">🥪</div>
+    <div class="float-icon" style="bottom:20%;right:8%;--dur:8s;--delay:3s">🍰</div>
+    <div class="float-icon" style="top:60%;left:5%;--dur:13s;--delay:0.5s">🥤</div>
+    <div class="float-icon" style="top:10%;right:25%;--dur:10s;--delay:1.5s">🧋</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Est. 2020 · Mysuru</div>
+    <h1 class="hero-title">
+      <span class="accent">IRA</span><br>CAFÉ
+    </h1>
+    <p class="hero-sub">Irani Chai – House of Taste</p>
+    <p class="hero-tagline">Authentic Irani Chai & Delicious Bites<br>handcrafted with love, served with warmth.</p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-primary">Explore Menu</a>
+      <a href="#offers" class="btn-secondary">Today's Offers</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Menu Items</div></div>
+      <div class="stat"><div class="stat-num">₹10</div><div class="stat-label">Starts From</div></div>
+      <div class="stat"><div class="stat-num">★ 4.8</div><div class="stat-label">Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENU ─── -->
+<section id="menu">
+  <div class="section-header reveal">
+    <span class="section-label">What We Serve</span>
+    <h2 class="section-title">Our Menu</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" onclick="showCategory('tea', this)">🍵 Tea</button>
+    <button class="tab-btn" onclick="showCategory('coffee', this)">☕ Coffee</button>
+    <button class="tab-btn" onclick="showCategory('cold', this)">🧊 Cold Coffee</button>
+    <button class="tab-btn" onclick="showCategory('shakes', this)">🥤 Milk Shakes</button>
+    <button class="tab-btn" onclick="showCategory('sandwich', this)">🥪 Sandwiches</button>
+    <button class="tab-btn" onclick="showCategory('maggie', this)">🍜 Maggie</button>
+    <button class="tab-btn" onclick="showCategory('quickbites', this)">🍟 Quick Bites</button>
+    <button class="tab-btn" onclick="showCategory('sweet', this)">🍰 Sweet Bites</button>
+  </div>
+
+  <!-- TEA -->
+  <div class="menu-grid active" id="cat-tea">
+    <div class="menu-card"><div class="item-icon">🍵</div><div class="item-info"><div class="item-name">Irani Tea</div><div class="item-desc">Classic Hyderabadi style</div></div><div class="item-price">₹20<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌶️</div><div class="item-info"><div class="item-name">Masala Tea</div><div class="item-desc">Spiced aromatic blend</div></div><div class="item-price">₹20<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🫚</div><div class="item-info"><div class="item-name">Ginger Elaichi Tea</div><div class="item-desc">Fresh ginger & cardamom</div></div><div class="item-price">₹20<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍋</div><div class="item-info"><div class="item-name">Lemon + Honey</div><div class="item-desc">Soothing citrus blend</div></div><div class="item-price">₹25<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍋</div><div class="item-info"><div class="item-name">Lemon + Ginger</div><div class="item-desc">Zesty & refreshing</div></div><div class="item-price">₹30<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌿</div><div class="item-info"><div class="item-name">Green Tea</div><div class="item-desc">Pure & healthy</div></div><div class="item-price">₹20<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌿</div><div class="item-info"><div class="item-name">Green Tea + Honey</div><div class="item-desc">Sweetened wellness</div></div><div class="item-price">₹25<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🫖</div><div class="item-info"><div class="item-name">Black Tea</div><div class="item-desc">Bold & strong</div></div><div class="item-price">₹20<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥛</div><div class="item-info"><div class="item-name">Hot Milk</div><div class="item-desc">Pure warm comfort</div></div><div class="item-price">₹20<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">⚡</div><div class="item-info"><div class="item-name">Boost</div><div class="item-desc">Energy boost drink</div></div><div class="item-price">₹20<span>/-</span></div></div>
+  </div>
+
+  <!-- COFFEE -->
+  <div class="menu-grid" id="cat-coffee">
+    <div class="menu-card"><div class="item-icon">☕</div><div class="item-info"><div class="item-name">Hot Coffee</div><div class="item-desc">Classic warm brew</div></div><div class="item-price">₹30<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍫</div><div class="item-info"><div class="item-name">Hot Chocolate</div><div class="item-desc">Rich cocoa warmth</div></div><div class="item-price">₹40<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">⬛</div><div class="item-info"><div class="item-name">Black Coffee</div><div class="item-desc">No sugar, pure energy</div></div><div class="item-price">₹25<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌟</div><div class="item-info"><div class="item-name">IRA Special Coffee</div><div class="item-desc">Our signature recipe</div></div><div class="item-price">₹45<span>/-</span></div></div>
+  </div>
+
+  <!-- COLD COFFEE -->
+  <div class="menu-grid" id="cat-cold">
+    <div class="menu-card"><div class="item-icon">🧊</div><div class="item-info"><div class="item-name">Cold Coffee</div><div class="item-desc">Chilled & smooth</div></div><div class="item-price">₹50<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍫</div><div class="item-info"><div class="item-name">Cold Chocolate</div><div class="item-desc">Iced cocoa bliss</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍦</div><div class="item-info"><div class="item-name">Cold Coffee + Ice Cream</div><div class="item-desc">Creamy indulgence</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍦</div><div class="item-info"><div class="item-name">Cold Chocolate + Ice Cream</div><div class="item-desc">Decadent treat</div></div><div class="item-price">₹75<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">☕</div><div class="item-info"><div class="item-name">Thick Cold Coffee</div><div class="item-desc">Dense & satisfying</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍫</div><div class="item-info"><div class="item-name">Thick Chocolate Coffee</div><div class="item-desc">Rich & velvety</div></div><div class="item-price">₹75<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌟</div><div class="item-info"><div class="item-name">Thick Coffee + Ice Cream</div><div class="item-desc">Premium chilled sip</div></div><div class="item-price">₹80<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌟</div><div class="item-info"><div class="item-name">Thick Chocolate + Ice Cream</div><div class="item-desc">Ultimate indulgence</div></div><div class="item-price">₹80<span>/-</span></div></div>
+  </div>
+
+  <!-- MILK SHAKES -->
+  <div class="menu-grid" id="cat-shakes">
+    <div class="menu-card"><div class="item-icon">🥭</div><div class="item-info"><div class="item-name">Mango Milk Shake</div><div class="item-desc">Tropical & fruity</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍫</div><div class="item-info"><div class="item-name">Chocolate Milk Shake</div><div class="item-desc">Classic chocolate</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍪</div><div class="item-info"><div class="item-name">Oreo Milk Shake</div><div class="item-desc">Cookies & cream</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍓</div><div class="item-info"><div class="item-name">Strawberry Milk Shake</div><div class="item-desc">Fresh berry blend</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧁</div><div class="item-info"><div class="item-name">Butterscotch Milk Shake</div><div class="item-desc">Sweet caramel notes</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🫐</div><div class="item-info"><div class="item-name">Black Currant Milk Shake</div><div class="item-desc">Tangy berry burst</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥝</div><div class="item-info"><div class="item-name">Kiwi Milk Shake</div><div class="item-desc">Tropical freshness</div></div><div class="item-price">₹70<span>/-</span></div></div>
+  </div>
+
+  <!-- SANDWICHES -->
+  <div class="menu-grid" id="cat-sandwich">
+    <div class="menu-card"><div class="item-icon">🥪</div><div class="item-info"><div class="item-name">Veg Grilled Sandwich</div><div class="item-desc">Classic grilled veg</div></div><div class="item-price">₹50<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧀</div><div class="item-info"><div class="item-name">Veg Cheese Grilled</div><div class="item-desc">Melted cheese delight</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥫</div><div class="item-info"><div class="item-name">Mayonnaise Cheese Sandwich</div><div class="item-desc">Creamy & cheesy</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌽</div><div class="item-info"><div class="item-name">Mexican Cheese Toast</div><div class="item-desc">Spicy Mexican twist</div></div><div class="item-price">₹80<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍕</div><div class="item-info"><div class="item-name">Neapolitan Cheese Toast</div><div class="item-desc">Italian-style toasted</div></div><div class="item-price">₹80<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🚀</div><div class="item-info"><div class="item-name">Veg Titanic Grilled</div><div class="item-desc">Loaded with veggies</div></div><div class="item-price">₹80<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌟</div><div class="item-info"><div class="item-name">IRA Special Grilled</div><div class="item-desc">Our house special</div></div><div class="item-price">₹85<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧀</div><div class="item-info"><div class="item-name">Paneer Cheese Grilled</div><div class="item-desc">Cottage cheese & cheese</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🌽</div><div class="item-info"><div class="item-name">Corn Cheese Grilled</div><div class="item-desc">Sweet corn & cheese</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧆</div><div class="item-info"><div class="item-name">Paneer Corn Grilled</div><div class="item-desc">Paneer meets sweet corn</div></div><div class="item-price">₹75<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍛</div><div class="item-info"><div class="item-name">Paneer Makhani Grilled</div><div class="item-desc">Rich makhani flavour</div></div><div class="item-price">₹75<span>/-</span></div></div>
+  </div>
+
+  <!-- MAGGIE -->
+  <div class="menu-grid" id="cat-maggie">
+    <div class="menu-card"><div class="item-icon">🍜</div><div class="item-info"><div class="item-name">Plain Maggie</div><div class="item-desc">Simple classic</div></div><div class="item-price">₹50<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥦</div><div class="item-info"><div class="item-name">Veg Maggie</div><div class="item-desc">Loaded with veggies</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧈</div><div class="item-info"><div class="item-name">Butter Maggie</div><div class="item-desc">Buttery indulgence</div></div><div class="item-price">₹70<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧆</div><div class="item-info"><div class="item-name">Paneer Maggie</div><div class="item-desc">Cottage cheese noodles</div></div><div class="item-price">₹85<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥚</div><div class="item-info"><div class="item-name">Egg Maggie</div><div class="item-desc">Egg-enriched noodles</div></div><div class="item-price">₹90<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍳</div><div class="item-info"><div class="item-name">Omelette Maggie</div><div class="item-desc">With fluffy omelette</div></div><div class="item-price">₹90<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥚</div><div class="item-info"><div class="item-name">Egg Half Fry Maggie</div><div class="item-desc">Topped with half fry</div></div><div class="item-price">₹99<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍳</div><div class="item-info"><div class="item-name">Egg Full Fry Maggie</div><div class="item-desc">Topped with full fry</div></div><div class="item-price">₹99<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🫓</div><div class="item-info"><div class="item-name">Omelette Pav</div><div class="item-desc">Omelette & soft pav</div></div><div class="item-price">₹60<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍞</div><div class="item-info"><div class="item-name">Bread Omelette</div><div class="item-desc">Classic street style</div></div><div class="item-price">₹60<span>/-</span></div></div>
+  </div>
+
+  <!-- QUICK BITES -->
+  <div class="menu-grid" id="cat-quickbites">
+    <div class="menu-card"><div class="item-icon">🍚</div><div class="item-info"><div class="item-name">Poha</div><div class="item-desc">Light flattened rice</div></div><div class="item-price">₹40<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🫓</div><div class="item-info"><div class="item-name">Vada Pav</div><div class="item-desc">Mumbai street classic</div></div><div class="item-price">₹25<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🥟</div><div class="item-info"><div class="item-name">Samosa</div><div class="item-desc">Crispy fried pastry</div></div><div class="item-price">₹25<span>/-</span></div></div>
+  </div>
+
+  <!-- SWEET BITES -->
+  <div class="menu-grid" id="cat-sweet">
+    <div class="menu-card"><div class="item-icon">🍞</div><div class="item-info"><div class="item-name">Chocolate Toast</div><div class="item-desc">Sweet chocolate spread</div></div><div class="item-price">₹50<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍓</div><div class="item-info"><div class="item-name">Jam Butter Toast</div><div class="item-desc">Classic comforting toast</div></div><div class="item-price">₹55<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🫓</div><div class="item-info"><div class="item-name">Bun Butter Maska</div><div class="item-desc">Irani café signature</div></div><div class="item-price">₹40<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🧈</div><div class="item-info"><div class="item-name">Jam/Butter Maska</div><div class="item-desc">Sweet buttery bun</div></div><div class="item-price">₹50<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍰</div><div class="item-info"><div class="item-name">Banana Cake</div><div class="item-desc">Moist & delicious</div></div><div class="item-price">₹15<span>/-</span></div></div>
+    <div class="menu-card"><div class="item-icon">🍪</div><div class="item-info"><div class="item-name">Osmania Biscuit</div><div class="item-desc">Hyderabadi heritage</div></div><div class="item-price">₹10<span>/-</span></div></div>
+  </div>
+</section>
+
+<!-- ─── OFFERS ─── -->
+<section id="offers">
+  <div class="section-header reveal">
+    <span class="section-label">Limited Time</span>
+    <h2 class="section-title">Today's Offers</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="offers-grid">
+    <div class="offer-card reveal">
+      <span class="offer-badge">Coffee Special</span>
+      <span class="offer-emoji">☕</span>
+      <h3 class="offer-title">Buy 1 Get 1 Free Coffee</h3>
+      <p class="offer-desc">Enjoy two cups for the price of one. Available on all hot coffees and our signature IRA Special Coffee.</p>
+      <div class="offer-validity">Valid Mon–Fri, 4 PM to 7 PM</div>
+    </div>
+    <div class="offer-card reveal reveal-delay-1">
+      <span class="offer-badge">Shake Deal</span>
+      <span class="offer-emoji">🥤</span>
+      <h3 class="offer-title">20% Off on Milkshakes</h3>
+      <p class="offer-desc">Cool down with any of our 7 flavour milkshakes at a flat 20% discount. No coupon needed!</p>
+      <div class="offer-validity">Valid weekends only · All day</div>
+    </div>
+    <div class="offer-card reveal reveal-delay-2">
+      <span class="offer-badge">Combo Offer</span>
+      <span class="offer-emoji">🌅</span>
+      <h3 class="offer-title">Evening Tea Combo</h3>
+      <p class="offer-desc">Irani Tea + Bun Butter Maska + Osmania Biscuit — our classic evening combo at a special bundled price of ₹60.</p>
+      <div class="offer-validity">Every day · 5 PM to 8 PM only</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-label">Find Us</span>
+    <h2 class="section-title">Come Visit Us</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <h3>We'd love to<br><em>see you here</em></h3>
+      <p>Step into the warm glow of IRA Café and experience the authentic taste of Irani Chai paired with our freshly made snacks and bites. Your table is always ready.</p>
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <div class="contact-row-text">
+            <strong>Phone</strong>
+            <span>77 6095 4050</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📍</div>
+          <div class="contact-row-text">
+            <strong>Location</strong>
+            <span>Mysuru, Karnataka, India</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-row-text">
+            <strong>Hours</strong>
+            <span>7:00 AM – 11:00 PM · All Days</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📦</div>
+          <div class="contact-row-text">
+            <strong>Order Online</strong>
+            <span>Available on Zomato & Swiggy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-cta reveal reveal-delay-1">
+      <div class="contact-box">
+        <h4>Ready to Order?</h4>
+        <p>Call us directly or visit us at our café. We're always happy to serve you fresh!</p>
+        <a href="tel:7760954050" class="btn-call">
+          <span>📞</span> Call Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div>
+    <div class="footer-logo">IRA CAFÉ<span>IRANI CHAI · MYSURU</span></div>
+  </div>
+  <div class="footer-copy">© 2025 IRA Café. All rights reserved.</div>
+</footer>
+
+<script>
+  // Nav toggle
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Close nav on link click
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  // Menu tabs
+  function showCategory(id, btn) {
+    document.querySelectorAll('.menu-grid').forEach(g => g.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('cat-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
